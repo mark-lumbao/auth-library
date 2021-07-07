@@ -1,8 +1,9 @@
-/**
- * This script includes authentication related utility functions
- */
-export type validationErrorType = { validation: { dataPath: string, keyword: string }[] };
+import { IValidationError } from '@types';
 
-export const passwordValidationError = (error: Error & validationErrorType) => (error.validation
+export const passwordValidationError = (error: IValidationError) => (error.validation
   .find(({ dataPath, keyword }) => dataPath === '.password' && keyword === 'pattern')
   ? new Error('Password pattern error!') : error);
+
+export default {
+  passwordValidationError,
+};

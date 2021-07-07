@@ -6,7 +6,10 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["./src/*"]
+      "@app/*": ["src/*"],
+      "@app": ["src/index.ts"],
+      "@types/*": ["src/types/*"],
+      "@types": ["src/types/index.d.ts"]
     },
     "strict": true,
     "esModuleInterop": true
