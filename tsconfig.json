@@ -12,6 +12,7 @@
       "@types": ["src/types/index.d.ts"]
     },
     "strict": true,
+    "noUnusedLocals": true,
     "esModuleInterop": true
   },
   "include": ["**/*"],

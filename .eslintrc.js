@@ -34,6 +34,8 @@ module.exports = {
   },
   rules: {
     'no-console': 2,
+    'no-unused-vars': 0,
+    '@typescript-eslint/no-unused-vars': 2,
     'max-lines': [2, {
       max: 150,
       skipBlankLines: false,
