@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { loginPayloadScheme, signUpPayloadScheme } from '@app/schema/auth';
-import { passwordValidationError } from '@app/utils/route/auth';
+import { authSchemaValidator } from '@app/utils/route/auth';
 /**
  * **attachValidation** property enables custom validationError handling
  * Reference: https://www.fastify.io/docs/latest/Validation-and-Serialization/#error-handling
@@ -9,11 +9,11 @@ const authRoutes = async (fastify: FastifyInstance) => {
   fastify.route({
     method: 'POST',
     url: '/signup',
-    attachValidation: true,
     schema: signUpPayloadScheme,
+    schemaErrorFormatter: authSchemaValidator,
     handler: (request, reply) => {
       if (request.validationError) {
-        reply.status(400).send(passwordValidationError(request.validationError));
+        reply.status(400).send(request.validationError);
       } else {
         /**
          * Save user data and reply with newly created user profile.
@@ -27,11 +27,11 @@ const authRoutes = async (fastify: FastifyInstance) => {
   fastify.route({
     method: 'POST',
     url: '/login',
-    attachValidation: true,
     schema: loginPayloadScheme,
+    schemaErrorFormatter: authSchemaValidator,
     handler: (request, reply) => {
       if (request.validationError) {
-        reply.status(400).send(passwordValidationError(request.validationError));
+        reply.status(400).send(request.validationError);
       } else reply.send(request.body);
     },
   });

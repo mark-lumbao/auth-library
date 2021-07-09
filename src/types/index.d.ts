@@ -1,10 +1,8 @@
-declare module '@types' {
-  export interface IValidation {
-    dataPath: string;
-    keyword: string;
-  }
+import { FastifySchemaValidationError } from 'fastify/types/schema';
 
-  export interface IValidationError extends Error {
-    validation: IValidation[];
-  }
+declare module '@types' {
+  export type schemaFormatterType = (
+    errors: FastifySchemaValidationError[],
+    dataVar: string,
+  ) => Error;
 }

@@ -1,9 +1,14 @@
-import { IValidationError } from '@types';
+import { schemaFormatterType } from '@types';
 
-export const passwordValidationError = (error: IValidationError) => (error.validation
-  .find(({ dataPath, keyword }) => dataPath === '.password' && keyword === 'pattern')
-  ? new Error('Password pattern error!') : error);
+export const authSchemaValidator: schemaFormatterType = (errors, dataVar) => {
+  const message = errors.map(({ message: msg, dataPath }) => {
+    const dPath = dataPath.replace('.', '');
+    if (dPath === 'password' && dataVar === 'body') return `${dPath}: Invalid password format!`;
+    return `${dPath}: ${msg}`;
+  });
+  return new Error(message.join(', '));
+};
 
 export default {
-  passwordValidationError,
+  authSchemaValidator,
 };

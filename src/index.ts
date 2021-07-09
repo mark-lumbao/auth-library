@@ -2,7 +2,14 @@ import Fastify from 'fastify';
 import setupRoutes from '@app/routes';
 
 const fastify = Fastify({
-  logger: true,
+  ajv: {
+    customOptions: {
+      allErrors: true, // validates all fields in schema
+    },
+  },
+  logger: {
+    prettyPrint: true,
+  },
 });
 /**
  * Initialize routes here
