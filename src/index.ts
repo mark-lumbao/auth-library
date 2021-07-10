@@ -8,7 +8,7 @@ const fastify = Fastify({
     },
   },
   logger: {
-    prettyPrint: true,
+    prettyPrint: true, // prints a more readable logs
   },
 });
 /**

@@ -1,32 +1,46 @@
-const authSchema = ({
-  username: {
-    title: 'Username',
-    type: 'string',
+export const authSchema = ({
+  $id: 'auth-schema',
+  type: 'object',
+  definitions: {
+    username: {
+      title: 'Username',
+      type: 'string',
+    },
+    email: {
+      title: 'Email Address',
+      type: 'string',
+      pattern: '.+@.+\\..+',
+    },
+    password: {
+      title: 'Password',
+      type: 'string',
+      pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#?!@$%^&*-])[a-zA-Z\\d#?!@$%^&*-]{8,}$',
+    },
   },
-  email: {
-    title: 'Email Address',
-    type: 'string',
-    pattern: '.+@.+\\..+',
+  properties: {
+    username: { $ref: 'auth-schema#/definitions/username' },
+    email: { $ref: 'auth-schema#/definitions/email' },
+    password: { $ref: 'auth-schema#/definitions/password' },
   },
-  password: {
-    title: 'Password',
-    type: 'string',
-    pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#?!@$%^&*-])[a-zA-Z\\d#?!@$%^&*-]{8,}$',
-  },
-});
-
-export const signUpPayloadScheme = ({
-  body: {
-    type: 'object',
-    properties: authSchema,
-    required: [...Object.keys(authSchema)],
-  },
+  required: ['username', 'email', 'password'],
 });
 
 export const loginPayloadScheme = ({
   body: {
     type: 'object',
-    properties: authSchema,
-    required: [...Object.keys(authSchema)],
+    properties: {
+      username: { $ref: 'auth-schema#/definitions/username' },
+      email: { $ref: 'auth-schema#/definitions/email' },
+      password: { $ref: 'auth-schema#/definitions/password' },
+    },
+    required: [
+      ...Object.keys(authSchema.definitions).filter((v) => v !== 'email'),
+    ],
+  },
+});
+
+export const signUpPayloadScheme = ({
+  body: {
+    $ref: 'auth-schema#',
   },
 });

@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import rootRoutes from './route.root';
-import authRoutes from './route.auth';
+import rootRoutes from './root';
+import authRoutes from './auth';
 
 const setup = async (fastify: FastifyInstance) => {
   await fastify.register(rootRoutes);

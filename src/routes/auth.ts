@@ -1,11 +1,10 @@
 import { FastifyInstance } from 'fastify';
-import { loginPayloadScheme, signUpPayloadScheme } from '@app/schema/auth';
-import { authSchemaValidator } from '@app/utils/route/auth';
-/**
- * **attachValidation** property enables custom validationError handling
- * Reference: https://www.fastify.io/docs/latest/Validation-and-Serialization/#error-handling
- */
+import { loginPayloadScheme, signUpPayloadScheme, authSchema } from '@app/schema/auth';
+import { authSchemaValidator } from '@app/schema/validators/auth';
+
 const authRoutes = async (fastify: FastifyInstance) => {
+  fastify.addSchema(authSchema);
+
   fastify.route({
     method: 'POST',
     url: '/signup',
