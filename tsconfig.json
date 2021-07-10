@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "CommonJS",
-    "outDir": "./lib",
+    "target": "esnext",
+    "module": "commonjs",
+    "outDir": "./dist",
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@app/*": ["src/*"],
-      "@app": ["src/index.ts"],
-      "@types/*": ["src/types/*"],
-      "@types": ["src/types/index.d.ts"]
+      "@main/*": ["lib/*"],
+      "@types/*": ["lib/types/*"],
+      "@types": ["lib/types/index.d.ts"],
+      "@app/*": ["demo/src/*"],
+      "@app": ["demo/src/index.ts"]
     },
     "strict": true,
     "noUnusedLocals": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationDir": "./dist/types"
   },
   "include": ["**/*"],
-  "exclude": ["node_modules", "lib"]
+  "exclude": ["node_modules", "dist"]
 }

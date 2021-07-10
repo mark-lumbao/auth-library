@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { loginPayloadScheme, signUpPayloadScheme, authSchema } from '@app/schema/auth';
-import { authSchemaValidator } from '@app/schema/validators/auth';
+import { loginPayloadScheme, signUpPayloadScheme, authSchema } from '@main/schema/auth';
+import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const authRoutes = async (fastify: FastifyInstance) => {
   fastify.addSchema(authSchema);

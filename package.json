@@ -1,12 +1,12 @@
 {
-  "name": "@mal/auth-library",
+  "name": "@mal/auth-routes",
   "version": "0.0.1",
-  "description": "Node authentication code documentation",
-  "main": "lib/index.js",
+  "description": "Fastify auth routes plugin",
+  "main": "dist/lib/index.js",
   "scripts": {
-    "start": "npm run build && node -r dotenv/config lib",
-    "start:dev": "nodemon lib",
-    "build": "rm -rf lib && tsc",
+    "start": "npm run build && node -r dotenv/config dist/demo",
+    "start:dev": "nodemon -r dotenv/config dist/demo",
+    "build": "rm -rf dist && tsc",
     "lint": "eslint --color --ext=[\".ts\"] .",
     "lint:fix": "eslint --fix --color --ext=[\".ts\"] ."
   },
@@ -17,7 +17,8 @@
     "authorization"
   ],
   "_moduleAliases": {
-    "@app": "lib/src"
+    "@app": "dist/demo/src",
+    "@main": "dist/lib"
   },
   "author": "Mark Anthony Lumbao",
   "license": "ISC",
