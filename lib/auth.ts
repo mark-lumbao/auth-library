@@ -15,8 +15,10 @@ const authRoutes = async (fastify: FastifyInstance) => {
         reply.status(400).send(request.validationError);
       } else {
         /**
-         * Save user data and reply with newly created user profile.
-         * Also, generate session token via JWT and attach it to the message.
+         * - Encrypt password from payload
+         * - Save user data with encrypted password
+         * - Generate json web token for the session
+         * - Respond with token and created user data without the password
          */
         reply.send(request.body);
       }
@@ -31,7 +33,7 @@ const authRoutes = async (fastify: FastifyInstance) => {
     handler: (request, reply) => {
       if (request.validationError) {
         reply.status(400).send(request.validationError);
-      } else reply.send(request.body);
+      } else reply.send(request.body); // Generate token, fetch user data and send it back to user
     },
   });
 };
