@@ -19,11 +19,11 @@ export const AuthLoginSchema = Type.Object({
   username: Type.Ref(AuthBaseSchema, 'username'),
   password: Type.Ref(AuthBaseSchema, 'password'),
 });
-export type LoginBodyType = Static<typeof AuthLoginSchema>;
+export interface ILoginBody extends Static<typeof AuthLoginSchema> {}
 
 export const AuthSignupSchema = Type.Object({
   email: Type.Ref(AuthBaseSchema, 'email'),
   username: Type.Ref(AuthBaseSchema, 'username'),
   password: Type.Ref(AuthBaseSchema, 'password'),
 });
-export type SignupBodyType = Static<typeof AuthSignupSchema>;
+export interface ISignupBody extends Static<typeof AuthSignupSchema> {}

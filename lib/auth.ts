@@ -1,15 +1,15 @@
 import { FastifyInstance } from 'fastify';
 import { hash } from 'bcrypt';
 import {
-  AuthLoginSchema, AuthSignupSchema, LoginBodyType,
-  SignupBodyType, AuthBaseSchema,
+  AuthLoginSchema, AuthSignupSchema, ILoginBody,
+  ISignupBody, AuthBaseSchema,
 } from '@main/schema/auth.schema';
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const authRoutes = async (fastify: FastifyInstance) => {
   fastify.addSchema(AuthBaseSchema);
 
-  fastify.route<{ Body: SignupBodyType }>({
+  fastify.route<{ Body: ISignupBody }>({
     method: 'POST',
     url: '/signup',
     schema: { body: AuthSignupSchema },
@@ -19,22 +19,17 @@ const authRoutes = async (fastify: FastifyInstance) => {
         reply.status(400).send(request.validationError);
       } else {
         /**
-         * **ToDos**:
-         * - Add type support for request body
-         *
-         * **Flow**:
          * - Save user data with encrypted password
          * - Generate json web token for the session
          * - Respond with token and created user data without the password
          */
-        const body = request.body;
-        const encryptedPassword = await hash(body.password, 10);
-        reply.send({ ...body, password: encryptedPassword });
+        request.body.password = await hash(request.body.password, 10);
+        reply.send(request.body);
       }
     },
   });
 
-  fastify.route<{ Body: LoginBodyType }>({
+  fastify.route<{ Body: ILoginBody }>({
     method: 'POST',
     url: '/login',
     schema: { body: AuthLoginSchema },
