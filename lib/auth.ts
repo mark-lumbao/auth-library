@@ -1,15 +1,18 @@
 import { FastifyInstance } from 'fastify';
 import { hash } from 'bcrypt';
-import { loginPayloadScheme, signUpPayloadScheme, authSchema } from '@main/schema/auth';
+import {
+  AuthLoginSchema, AuthSignupSchema, LoginBodyType,
+  SignupBodyType, AuthBaseSchema,
+} from '@main/schema/auth.schema';
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const authRoutes = async (fastify: FastifyInstance) => {
-  fastify.addSchema(authSchema);
+  fastify.addSchema(AuthBaseSchema);
 
-  fastify.route({
+  fastify.route<{ Body: SignupBodyType }>({
     method: 'POST',
     url: '/signup',
-    schema: signUpPayloadScheme,
+    schema: { body: AuthSignupSchema },
     schemaErrorFormatter: authSchemaValidator,
     handler: async (request, reply) => {
       if (request.validationError) {
@@ -20,22 +23,21 @@ const authRoutes = async (fastify: FastifyInstance) => {
          * - Add type support for request body
          *
          * **Flow**:
-         * - Encrypt password from payload
          * - Save user data with encrypted password
          * - Generate json web token for the session
          * - Respond with token and created user data without the password
          */
-        const body = request.body as { password: string }; // temporary type fix
+        const body = request.body;
         const encryptedPassword = await hash(body.password, 10);
         reply.send({ ...body, password: encryptedPassword });
       }
     },
   });
 
-  fastify.route({
+  fastify.route<{ Body: LoginBodyType }>({
     method: 'POST',
     url: '/login',
-    schema: loginPayloadScheme,
+    schema: { body: AuthLoginSchema },
     schemaErrorFormatter: authSchemaValidator,
     handler: (request, reply) => {
       if (request.validationError) {
