@@ -14,16 +14,30 @@ export const AuthBaseSchema = Type.Box('auth', {
   }),
 });
 
-export const AuthLoginSchema = Type.Object({
+export const AuthLoginReqSchema = Type.Object({
   email: Type.Optional(Type.Ref(AuthBaseSchema, 'email')),
   username: Type.Ref(AuthBaseSchema, 'username'),
   password: Type.Ref(AuthBaseSchema, 'password'),
-});
-export interface ILoginBody extends Static<typeof AuthLoginSchema> {}
+}, { additionalProperties: false });
 
-export const AuthSignupSchema = Type.Object({
+export const AuthLoginResSchema = Type.Object({
+  email: Type.Optional(Type.Ref(AuthBaseSchema, 'email')),
+  username: Type.Ref(AuthBaseSchema, 'username'),
+  sessionToken: Type.String(),
+});
+
+export interface ILoginBody extends Static<typeof AuthLoginReqSchema> {}
+
+export const AuthSignupReqSchema = Type.Object({
   email: Type.Ref(AuthBaseSchema, 'email'),
   username: Type.Ref(AuthBaseSchema, 'username'),
   password: Type.Ref(AuthBaseSchema, 'password'),
 });
-export interface ISignupBody extends Static<typeof AuthSignupSchema> {}
+
+export const AuthSignupResSchema = Type.Object({
+  email: Type.Ref(AuthBaseSchema, 'email'),
+  username: Type.Ref(AuthBaseSchema, 'username'),
+  sessionToken: Type.String(),
+});
+
+export interface ISignupBody extends Static<typeof AuthSignupReqSchema> {}

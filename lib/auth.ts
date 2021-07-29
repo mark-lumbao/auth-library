@@ -1,30 +1,34 @@
 import { FastifyInstance } from 'fastify';
 import { hash } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 import {
-  AuthLoginSchema, AuthSignupSchema, ILoginBody,
-  ISignupBody, AuthBaseSchema,
+  AuthLoginReqSchema, AuthSignupReqSchema, ILoginBody,
+  AuthLoginResSchema, ISignupBody, AuthBaseSchema,
 } from '@main/schema/auth.schema';
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const authRoutes = async (fastify: FastifyInstance) => {
   fastify.addSchema(AuthBaseSchema);
 
+  const PRIVATE_KEY = 'PRIVATE_KEY'; // this is a temporary value
+
   fastify.route<{ Body: ISignupBody }>({
     method: 'POST',
     url: '/signup',
-    schema: { body: AuthSignupSchema },
+    schema: {
+      body: AuthSignupReqSchema,
+      response: {
+        200: AuthLoginResSchema,
+      },
+    },
     schemaErrorFormatter: authSchemaValidator,
     handler: async (request, reply) => {
       if (request.validationError) {
         reply.status(400).send(request.validationError);
       } else {
-        /**
-         * - Save user data with encrypted password
-         * - Generate json web token for the session
-         * - Respond with token and created user data without the password
-         */
         request.body.password = await hash(request.body.password, 10);
-        reply.send(request.body);
+        const sessionToken = sign(request.body, PRIVATE_KEY);
+        reply.send({ ...request.body, sessionToken });
       }
     },
   });
@@ -32,12 +36,25 @@ const authRoutes = async (fastify: FastifyInstance) => {
   fastify.route<{ Body: ILoginBody }>({
     method: 'POST',
     url: '/login',
-    schema: { body: AuthLoginSchema },
+    schema: {
+      body: AuthLoginReqSchema,
+      response: {
+        200: AuthLoginResSchema,
+      },
+    },
     schemaErrorFormatter: authSchemaValidator,
     handler: (request, reply) => {
       if (request.validationError) {
         reply.status(400).send(request.validationError);
-      } else reply.send(request.body); // Generate token, fetch user data and send it back to user
+      } else {
+        /* ToDos:
+         *
+         * - Add verification logic
+         * - Verify in demo that logic is working
+         */
+        const sessionToken = sign(request.body, PRIVATE_KEY);
+        reply.send({ ...request.body, sessionToken });
+      }
     },
   });
 };
