@@ -24,7 +24,7 @@ export const AuthLoginResSchema = Type.Object({
   email: Type.Optional(Type.Ref(AuthBaseSchema, 'email')),
   username: Type.Ref(AuthBaseSchema, 'username'),
   sessionToken: Type.String(),
-});
+}, { additionalProperties: false });
 
 export interface ILoginBody extends Static<typeof AuthLoginReqSchema> {}
 
@@ -32,12 +32,12 @@ export const AuthSignupReqSchema = Type.Object({
   email: Type.Ref(AuthBaseSchema, 'email'),
   username: Type.Ref(AuthBaseSchema, 'username'),
   password: Type.Ref(AuthBaseSchema, 'password'),
-});
+}, { additionalProperties: false });
 
 export const AuthSignupResSchema = Type.Object({
   email: Type.Ref(AuthBaseSchema, 'email'),
   username: Type.Ref(AuthBaseSchema, 'username'),
   sessionToken: Type.String(),
-});
+}, { additionalProperties: false });
 
 export interface ISignupBody extends Static<typeof AuthSignupReqSchema> {}

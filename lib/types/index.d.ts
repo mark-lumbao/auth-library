@@ -1,3 +1,4 @@
+import { FastifyPluginAsync } from 'fastify';
 import { FastifySchemaValidationError } from 'fastify/types/schema';
 
 declare module '@types' {
@@ -5,4 +6,11 @@ declare module '@types' {
     errors: FastifySchemaValidationError[],
     dataVar: string,
   ) => Error;
+
+  export interface IAuthRoutesOptions {
+    privateKey: string;
+    signupBodySchema?: object;
+  }
+
+  export type AuthRoutesType = FastifyPluginAsync<IAuthRoutesOptions>;
 }
