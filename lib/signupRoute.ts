@@ -8,7 +8,7 @@ import {
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const useSignupRoute: AuthRoutesType = async (
-  fastify, { privateKey, signupBodySchema = {} },
+  fastify, { privateKey, saveUser, signupBodySchema = {} },
 ) => {
   fastify.route<{ Body: ISignupBody }>({
     method: 'POST',
@@ -37,6 +37,7 @@ const useSignupRoute: AuthRoutesType = async (
         reply.status(400).send(request.validationError);
       } else {
         request.body.password = await hash(request.body.password, 10);
+        saveUser(request.body);
         const sessionToken = sign(request.body, privateKey);
         reply.send({ ...request.body, sessionToken });
       }

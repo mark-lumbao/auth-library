@@ -4,11 +4,11 @@ import signupRoute from './signupRoute';
 import loginRoute from './loginRoute';
 
 const authRoutes: AuthRoutesType = async (
-  fastify, { privateKey, signupBodySchema = {} },
+  fastify, { signupBodySchema = {}, ...rest },
 ) => {
   fastify.addSchema(AuthBaseSchema);
-  signupRoute(fastify, { privateKey, signupBodySchema });
-  loginRoute(fastify, { privateKey, signupBodySchema });
+  signupRoute(fastify, { ...rest, signupBodySchema });
+  loginRoute(fastify, { ...rest, signupBodySchema });
 };
 
 export default authRoutes;

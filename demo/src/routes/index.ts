@@ -13,6 +13,8 @@ const setup = async (fastify: FastifyInstance) => {
         lastName: { type: 'string' },
         firstName: { type: 'string' },
       },
+      saveUser: (u) => fastify.log.info(u),
+      fetchUser: (u) => fastify.log.info(u),
     },
   );
 };

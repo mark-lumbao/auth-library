@@ -6,7 +6,7 @@ import {
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const useLoginRoute: AuthRoutesType = async (
-  fastify, { privateKey },
+  fastify, { privateKey, fetchUser },
 ) => {
   fastify.route<{ Body: ILoginBody }>({
     method: 'POST',
@@ -27,6 +27,7 @@ const useLoginRoute: AuthRoutesType = async (
          * - Add verification logic
          * - Verify in demo that logic is working
          */
+        fetchUser(request.body);
         const sessionToken = sign(request.body, privateKey);
         reply.send({ ...request.body, sessionToken });
       }
