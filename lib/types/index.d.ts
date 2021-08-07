@@ -9,10 +9,10 @@ declare module '@types' {
 
   export interface IAuthRoutesOptions {
     privateKey: string;
-    signupBodySchema?: object;
     saveUser: <T extends object>(opt: T) => void;
     fetchUser: <T extends object>(opt: T) => void;
+    signupBodySchema?: object;
   }
 
-  export type AuthRoutesType = FastifyPluginAsync<IAuthRoutesOptions>;
+  export interface IAuthRoutes extends FastifyPluginAsync<IAuthRoutesOptions> {}
 }

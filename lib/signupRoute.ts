@@ -1,13 +1,13 @@
 import { hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { AuthRoutesType } from '@types';
+import { IAuthRoutes } from '@types';
 import {
   AuthSignupReqSchema, AuthSignupResSchema,
   AuthLoginResSchema, ISignupBody,
 } from '@main/schema/auth.schema';
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
-const useSignupRoute: AuthRoutesType = async (
+const useSignupRoute: IAuthRoutes = async (
   fastify, { privateKey, saveUser, signupBodySchema = {} },
 ) => {
   fastify.route<{ Body: ISignupBody }>({

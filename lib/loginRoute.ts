@@ -1,11 +1,11 @@
 import { sign } from 'jsonwebtoken';
-import { AuthRoutesType } from '@types';
+import { IAuthRoutes } from '@types';
 import {
   AuthLoginResSchema, ILoginBody, AuthLoginReqSchema,
 } from '@main/schema/auth.schema';
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
-const useLoginRoute: AuthRoutesType = async (
+const useLoginRoute: IAuthRoutes = async (
   fastify, { privateKey, fetchUser },
 ) => {
   fastify.route<{ Body: ILoginBody }>({
