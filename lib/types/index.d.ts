@@ -1,5 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
 import { FastifySchemaValidationError } from 'fastify/types/schema';
+import { ILoginBody, ISignupBody } from 'lib/schema/auth.schema';
 
 declare module '@types' {
   export type schemaFormatterType = (
@@ -9,8 +10,8 @@ declare module '@types' {
 
   export interface IAuthRoutesOptions {
     privateKey: string;
-    saveUser: <T extends object>(opt: T) => void;
-    fetchUser: <T extends object>(opt: T) => void;
+    saveUser: <T extends ISignupBody>(opt: T) => object | undefined;
+    fetchUser: <T extends ILoginBody>(opt: T) => object | undefined;
     signupBodySchema?: object;
   }
 

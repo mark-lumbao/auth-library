@@ -22,14 +22,10 @@ const useLoginRoute: IAuthRoutes = async (
       if (request.validationError) {
         reply.status(400).send(request.validationError);
       } else {
-        /* ToDos:
-         *
-         * - Add verification logic
-         * - Verify in demo that logic is working
-         */
-        fetchUser(request.body);
-        const sessionToken = sign(request.body, privateKey);
-        reply.send({ ...request.body, sessionToken });
+        const user = fetchUser(request.body);
+        if (!user) throw new Error('Unknown user');
+        const sessionToken = sign(user, privateKey);
+        reply.send({ ...user, sessionToken });
       }
     },
   });
