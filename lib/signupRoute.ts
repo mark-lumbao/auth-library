@@ -37,7 +37,7 @@ const useSignupRoute: IAuthRoutes = async (
         reply.status(400).send(request.validationError);
       } else {
         request.body.password = await hash(request.body.password, 10);
-        const user = saveUser(request.body);
+        const user = await saveUser(request.body);
         if (!user) throw new Error('Failed to save new user');
         const sessionToken = sign(user, privateKey);
         reply.send({ ...user, sessionToken });

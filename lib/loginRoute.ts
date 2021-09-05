@@ -18,14 +18,18 @@ const useLoginRoute: IAuthRoutes = async (
       },
     },
     schemaErrorFormatter: authSchemaValidator,
-    handler: (request, reply) => {
+    handler: async (request, reply) => {
       if (request.validationError) {
         reply.status(400).send(request.validationError);
       } else {
-        const user = fetchUser(request.body);
-        if (!user) throw new Error('Unknown user');
-        const sessionToken = sign(user, privateKey);
-        reply.send({ ...user, sessionToken });
+        const user = await fetchUser(request.body);
+        // TODO add password verification login
+        if (!user) {
+          reply.status(401).send('User not found!');
+        } else {
+          const sessionToken = sign(user, privateKey);
+          reply.send({ ...user, sessionToken });
+        }
       }
     },
   });

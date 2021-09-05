@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import authRoutes from '@main/auth';
+import { save, get } from '@app/utils/persist';
 import rootRoutes from './root';
 
 const setup = async (fastify: FastifyInstance) => {
@@ -13,8 +14,8 @@ const setup = async (fastify: FastifyInstance) => {
         lastName: { type: 'string' },
         firstName: { type: 'string' },
       },
-      saveUser: (u) => u, // TODO Save user to db then return result
-      fetchUser: (u) => u, // TODO fetch user from db then return result
+      saveUser: (u) => save(u),
+      fetchUser: (u) => get(u),
     },
   );
 };

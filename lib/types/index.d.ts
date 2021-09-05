@@ -10,8 +10,8 @@ declare module '@types' {
 
   export interface IAuthRoutesOptions {
     privateKey: string;
-    saveUser: <T extends ISignupBody>(opt: T) => object | undefined;
-    fetchUser: <T extends ILoginBody>(opt: T) => object | undefined;
+    saveUser: <T extends ISignupBody>(opt: T) => Promise<object | undefined>;
+    fetchUser: <T extends ILoginBody>(opt: T) => Promise<object | undefined>;
     signupBodySchema?: object;
   }
 
