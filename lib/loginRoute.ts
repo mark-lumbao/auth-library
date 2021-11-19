@@ -10,7 +10,7 @@ import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const useLoginRoute: IAuthRoutes = async (
   fastify,
-  { privateKey, fetchUser },
+  { privateKey, fetchUser, tokenLifespan },
 ) => {
   fastify.route<{ Body: ILoginBody }>({
     method: 'POST',
@@ -37,7 +37,9 @@ const useLoginRoute: IAuthRoutes = async (
           if (!passPassed) {
             reply.status(401).send('Incorrect password!');
           } else {
-            const sessionToken = sign(user, privateKey);
+            const sessionToken = sign(user, privateKey, {
+              expiresIn: tokenLifespan,
+            });
             reply.send({ ...user, sessionToken });
           }
         }

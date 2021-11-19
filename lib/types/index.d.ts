@@ -9,9 +9,10 @@ declare module '@types' {
   ) => Error;
 
   export interface IAuthRoutesOptions {
-    privateKey: string;
     saveUser: <T extends ISignupBody>(opt: T) => Promise<object | undefined>;
     fetchUser: <T extends ILoginBody>(opt: T) => Promise<object | undefined>;
+    privateKey: string;
+    tokenLifespan: number | string;
     signupBodySchema?: object;
   }
 

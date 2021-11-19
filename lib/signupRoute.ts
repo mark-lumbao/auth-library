@@ -11,7 +11,9 @@ import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const useSignupRoute: IAuthRoutes = async (
   fastify,
-  { privateKey, saveUser, signupBodySchema = {} },
+  {
+    privateKey, saveUser, signupBodySchema = {}, tokenLifespan,
+  },
 ) => {
   fastify.route<{ Body: ISignupBody }>({
     method: 'POST',
@@ -42,7 +44,9 @@ const useSignupRoute: IAuthRoutes = async (
         request.body.password = await hash(request.body.password, 10);
         const user = await saveUser(request.body);
         if (!user) throw new Error('Failed to save new user');
-        const sessionToken = sign(user, privateKey);
+        const sessionToken = sign(user, privateKey, {
+          expiresIn: tokenLifespan,
+        });
         reply.send({ ...user, sessionToken });
       }
     },

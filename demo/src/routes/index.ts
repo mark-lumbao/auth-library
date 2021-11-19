@@ -7,7 +7,8 @@ const setup = async (fastify: FastifyInstance) => {
   await fastify.register(rootRoutes);
   await fastify.register(authRoutes, {
     prefix: '/auth',
-    privateKey: 'PRIVATE_KEY',
+    privateKey: process.env.PRIVATE_KEY || 'PRIVATE_KEY',
+    tokenLifespan: process.env.TOKEN_LIFESPAN || '2h',
     signupBodySchema: {
       lastName: { type: 'string' },
       firstName: { type: 'string' },
