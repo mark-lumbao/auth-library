@@ -4,7 +4,8 @@ import signupRoute from './signupRoute';
 import loginRoute from './loginRoute';
 
 const authRoutes: IAuthRoutes = async (
-  fastify, { signupBodySchema = {}, ...rest },
+  fastify,
+  { signupBodySchema = {}, ...rest },
 ) => {
   fastify.addSchema(AuthBaseSchema);
   signupRoute(fastify, { ...rest, signupBodySchema });

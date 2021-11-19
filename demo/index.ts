@@ -1,5 +1,4 @@
 /**
- *
  * App Entry point
  */
 import 'module-alias/register';

@@ -21,8 +21,12 @@ const checkDataFile = async () => {
 
 export const save = async (object: DataInterface) => {
   await checkDataFile();
-  const parsedData = JSON.parse(await asyncReadFile(DATAFILENAME, { encoding: 'utf8' })) as unknown as DataInterface[];
-  const targetData = parsedData.find(({ username }) => username === object.username);
+  const parsedData = JSON.parse(
+    await asyncReadFile(DATAFILENAME, { encoding: 'utf8' }),
+  ) as unknown as DataInterface[];
+  const targetData = parsedData.find(
+    ({ username }) => username === object.username,
+  );
   if (!targetData) {
     parsedData.push(object);
     await asyncWriteFile(DATAFILENAME, JSON.stringify(parsedData));
@@ -33,8 +37,11 @@ export const save = async (object: DataInterface) => {
 
 export const get = async (object: DataInterface) => {
   await checkDataFile();
-  const parsedData = JSON.parse(await asyncReadFile(DATAFILENAME, { encoding: 'utf8' })) as unknown as DataInterface[];
-  const targetData = parsedData
-    .find(({ username }) => username === object.username);
+  const parsedData = JSON.parse(
+    await asyncReadFile(DATAFILENAME, { encoding: 'utf8' }),
+  ) as unknown as DataInterface[];
+  const targetData = parsedData.find(
+    ({ username }) => username === object.username,
+  );
   return targetData;
 };

@@ -2,12 +2,15 @@ import { sign } from 'jsonwebtoken';
 import { compare } from 'bcrypt';
 import { IAuthRoutes } from '@types';
 import {
-  AuthLoginResSchema, ILoginBody, AuthLoginReqSchema,
+  AuthLoginResSchema,
+  ILoginBody,
+  AuthLoginReqSchema,
 } from '@main/schema/auth.schema';
 import { authSchemaValidator } from '@main/schema/validators/auth';
 
 const useLoginRoute: IAuthRoutes = async (
-  fastify, { privateKey, fetchUser },
+  fastify,
+  { privateKey, fetchUser },
 ) => {
   fastify.route<{ Body: ILoginBody }>({
     method: 'POST',
@@ -28,7 +31,8 @@ const useLoginRoute: IAuthRoutes = async (
           reply.status(401).send('User not found!');
         } else {
           const passPassed = await compare(
-            request.body.password, (user as { password: string }).password,
+            request.body.password,
+            (user as { password: string }).password,
           );
           if (!passPassed) {
             reply.status(401).send('Incorrect password!');

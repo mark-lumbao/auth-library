@@ -5,7 +5,7 @@ import { ILoginBody, ISignupBody } from 'lib/schema/auth.schema';
 declare module '@types' {
   export type schemaFormatterType = (
     errors: FastifySchemaValidationError[],
-    dataVar: string,
+    dataVar: string
   ) => Error;
 
   export interface IAuthRoutesOptions {
