@@ -11,6 +11,7 @@ const fastify = Fastify({
     prettyPrint: true, // prints a more readable logs
   },
 });
+
 /**
  * Initialize routes here
  */

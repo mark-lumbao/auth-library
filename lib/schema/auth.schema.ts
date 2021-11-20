@@ -33,9 +33,6 @@ export const AuthLoginResSchema = Type.Object(
   { additionalProperties: false },
 );
 
-export interface ILoginBody extends Static<typeof AuthLoginReqSchema> {}
-export interface ILoginResponse extends Static<typeof AuthLoginResSchema> {}
-
 export const AuthSignupReqSchema = Type.Object(
   {
     email: Type.Ref(AuthBaseSchema, 'email'),
@@ -54,5 +51,7 @@ export const AuthSignupResSchema = Type.Object(
   { additionalProperties: false },
 );
 
+export interface ILoginBody extends Static<typeof AuthLoginReqSchema> {}
+export interface ILoginResponse extends Static<typeof AuthLoginResSchema> {}
 export interface ISignupBody extends Static<typeof AuthSignupReqSchema> {}
 export interface ISignupResponse extends Static<typeof AuthSignupResSchema> {}

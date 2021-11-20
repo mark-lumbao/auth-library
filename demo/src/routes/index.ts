@@ -2,9 +2,11 @@ import { FastifyInstance } from 'fastify';
 import authRoutes from '@main/auth';
 import { save, get } from '@app/utils/persist';
 import rootRoutes from './root';
+import protectedRoutes from './protected';
 
 const setup = async (fastify: FastifyInstance) => {
   await fastify.register(rootRoutes);
+  await fastify.register(protectedRoutes);
   await fastify.register(authRoutes, {
     prefix: '/auth',
     privateKey: process.env.PRIVATE_KEY || 'PRIVATE_KEY',
