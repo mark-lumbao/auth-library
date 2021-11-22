@@ -1,15 +1,15 @@
 import { hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { IAuthRoutes } from '@mal-auth';
+import authRoutes from '..';
 import {
   AuthSignupReqSchema,
   AuthSignupResSchema,
   AuthLoginResSchema,
   ISignupBody,
-} from '@mal-auth/schema/auth.schema';
-import { authSchemaValidator } from '@mal-auth/schema/validators/auth';
+} from './schema/auth.schema';
+import { authSchemaValidator } from './schema/validators/auth';
 
-const useSignupRoute: IAuthRoutes = async (
+const useSignupRoute: typeof authRoutes = async (
   fastify,
   {
     privateKey, saveUser, signupBodySchema = {}, tokenLifespan,

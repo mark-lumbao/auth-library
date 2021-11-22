@@ -5,17 +5,10 @@
     "outDir": "./dist",
     "rootDir": ".",
     "baseUrl": ".",
-    "paths": {
-      "@mal-auth/*": ["lib/*"],
-      "@mal-auth": ["lib/index.ts"],
-      "@app/*": ["demo/src/*"],
-      "@app": ["demo/src/index.ts"]
-    },
     "strict": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
-    "declaration": true,
-    "declarationDir": "./dist/types"
+    "declaration": true
   },
   "include": ["**/*"],
   "exclude": ["node_modules", "dist"]

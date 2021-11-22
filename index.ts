@@ -1,12 +1,12 @@
-import { FastifyPluginAsync } from 'fastify';
+import { FastifyPluginCallback } from 'fastify';
 import {
   ILoginBody,
   ISignupBody,
   AuthBaseSchema,
-} from '@mal-auth/schema/auth.schema';
-import signupRoute from './signupRoute';
-import loginRoute from './loginRoute';
-import verifyRequest from './utils/verifyRequest';
+} from './src/schema/auth.schema';
+import signupRoute from './src/signupRoute';
+import loginRoute from './src/loginRoute';
+import verifyRequest from './src/utils/verifyRequest';
 
 export interface IAuthRoutesOptions {
   saveUser: <T extends ISignupBody>(opt: T) => Promise<object | undefined>;
@@ -16,15 +16,15 @@ export interface IAuthRoutesOptions {
   signupBodySchema?: object;
 }
 
-export interface IAuthRoutes extends FastifyPluginAsync<IAuthRoutesOptions> {}
-
-const authRoutes: IAuthRoutes = async (
+const authRoutes: FastifyPluginCallback<IAuthRoutesOptions> = async (
   fastify,
   { signupBodySchema = {}, ...rest },
+  done,
 ) => {
   fastify.addSchema(AuthBaseSchema);
-  signupRoute(fastify, { ...rest, signupBodySchema });
-  loginRoute(fastify, { ...rest, signupBodySchema });
+  signupRoute(fastify, { ...rest, signupBodySchema }, done);
+  loginRoute(fastify, { ...rest, signupBodySchema }, done);
+  done();
 };
 
 export const verify = verifyRequest;

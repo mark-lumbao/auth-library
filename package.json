@@ -1,11 +1,9 @@
 {
-  "name": "@mal-auth",
+  "name": "mal-auth",
   "version": "0.0.1",
   "description": "Fastify helper plugin for authentication and authorization.",
-  "main": "dist/lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build && node -r dotenv/config dist/demo",
-    "start:dev": "tsc-watch --onSuccess \"node -r dotenv/config dist/demo\"",
     "build": "rm -rf dist && tsc",
     "lint": "eslint --color --ext=[\".ts\"] .",
     "lint:fix": "eslint --fix --color --ext=[\".ts\"] ."
@@ -19,10 +17,6 @@
     "jsonwebtoken",
     "bcrypt"
   ],
-  "_moduleAliases": {
-    "@app": "dist/demo/src",
-    "@mal-auth": "dist/lib"
-  },
   "author": "Mark Anthony Lumbao",
   "license": "ISC",
   "devDependencies": {
@@ -43,7 +37,6 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
-    "module-alias": "^2.2.2",
     "pino-pretty": "^5.1.1"
   },
   "peerDependencies": {

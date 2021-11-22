@@ -1,14 +1,14 @@
 import { sign } from 'jsonwebtoken';
 import { compare } from 'bcrypt';
-import { IAuthRoutes } from '@mal-auth';
+import auth from '..';
 import {
   AuthLoginResSchema,
   ILoginBody,
   AuthLoginReqSchema,
-} from '@mal-auth/schema/auth.schema';
-import { authSchemaValidator } from '@mal-auth/schema/validators/auth';
+} from './schema/auth.schema';
+import { authSchemaValidator } from './schema/validators/auth';
 
-const useLoginRoute: IAuthRoutes = async (
+const useLoginRoute: typeof auth = async (
   fastify,
   { privateKey, fetchUser, tokenLifespan },
 ) => {
