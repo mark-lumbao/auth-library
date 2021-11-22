@@ -6,9 +6,8 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@main/*": ["lib/*"],
-      "@types/*": ["lib/types/*"],
-      "@types": ["lib/types/index.d.ts"],
+      "@mal-auth/*": ["lib/*"],
+      "@mal-auth": ["lib/index.ts"],
       "@app/*": ["demo/src/*"],
       "@app": ["demo/src/index.ts"]
     },

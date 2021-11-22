@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { verify } from '@main/auth';
+import { verify } from '@mal-auth';
 
 const protectedRoutes = async (fastify: FastifyInstance) => {
   fastify.route({

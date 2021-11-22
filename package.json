@@ -1,7 +1,7 @@
 {
-  "name": "@mal/auth-routes",
+  "name": "@mal-auth",
   "version": "0.0.1",
-  "description": "Fastify auth routes plugin",
+  "description": "Fastify helper plugin for authentication and authorization.",
   "main": "dist/lib/index.js",
   "scripts": {
     "start": "npm run build && node -r dotenv/config dist/demo",
@@ -11,14 +11,17 @@
     "lint:fix": "eslint --fix --color --ext=[\".ts\"] ."
   },
   "keywords": [
-    "security",
+    "fastify",
     "node",
+    "security",
     "authentication",
-    "authorization"
+    "authorization",
+    "jsonwebtoken",
+    "bcrypt"
   ],
   "_moduleAliases": {
     "@app": "dist/demo/src",
-    "@main": "dist/lib"
+    "@mal-auth": "dist/lib"
   },
   "author": "Mark Anthony Lumbao",
   "license": "ISC",
@@ -39,9 +42,11 @@
     "@sinclair/typebox": "^0.18.1",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
-    "fastify": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "pino-pretty": "^5.1.1"
+  },
+  "peerDependencies": {
+    "fastify": "^3.18.0"
   }
 }

@@ -1,4 +1,9 @@
-import { schemaFormatterType } from '@types';
+import { FastifySchemaValidationError } from 'fastify/types/schema';
+
+export type schemaFormatterType = (
+  errors: FastifySchemaValidationError[],
+  dataVar: string
+) => Error;
 
 export const authSchemaValidator: schemaFormatterType = (errors, dataVar) => {
   const message = errors.map(({ message: msg, dataPath }) => {
